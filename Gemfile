@@ -7,6 +7,7 @@ gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'turbolinks'
+gem 'uglifier'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
