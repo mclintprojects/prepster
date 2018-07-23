@@ -8,12 +8,12 @@ gem 'sass-rails', '~> 5.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'pg'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'sqlite3'
-  gem 'pg'
 end
 
 group :development do
