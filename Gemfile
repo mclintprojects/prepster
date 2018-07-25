@@ -15,6 +15,7 @@ gem 'figaro'
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'sqlite3'
+  gem 'pry-rails'
 end
 
 group :development do
