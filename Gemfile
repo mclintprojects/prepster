@@ -11,6 +11,8 @@ gem 'uglifier'
 gem 'pg'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors', require: 'rack/cors'
+gem 'jwt'
+gem 'figaro'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
