@@ -6,8 +6,6 @@ gem 'rails', '~> 5.2.0'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'bcrypt', '~> 3.1.7'
-gem 'turbolinks'
-gem 'uglifier'
 gem 'pg'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors', require: 'rack/cors'
