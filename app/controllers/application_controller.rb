@@ -2,21 +2,32 @@ require "jwt"
 
 class ApplicationController < ActionController::API
     before_action :authenticate_request
-    attr_accessor :is_authenticated, :user
+    attr_accessor :auth_user
+
+    def authenticated?
+        @is_authenticated
+    end
 
     private
+
+    attr_accessor :is_authenticated
+
     def authenticate_request
-        token = get_bearer_token
-        if(token.present?)
-            @is_authenticated = true
-            @user = decode_token(token)[:user]
-        else
+        begin
+            token = get_bearer_token
+            if(token.present?)
+                @auth_user = User.find(decode_token(token)["user_id"])
+                @is_authenticated = @auth_user.present?
+            else
+                @is_authenticated = false
+            end
+        rescue => exception
             @is_authenticated = false
         end
     end
 
     def get_bearer_token
-        auth_header = headers["Authorization"]
+        auth_header = request.headers["Authorization"]
         if(auth_header.present?)
             auth_header.split(" ").last
         else
@@ -25,6 +36,7 @@ class ApplicationController < ActionController::API
     end
 
     def decode_token(token)
-        JWT.decode(token, ENV["jwt_token"], true)[0]
+        puts token
+        JWT.decode(token, ENV["jwt_secret"], true, {algorithm: "HS256"})[0]["data"]
     end
 end

@@ -1,6 +1,6 @@
 class AuthController < ApplicationController
     def login
-        render json: {is_authenticated: is_authenticated}
+        render json: {is_authenticated: authenticated?, user: ActiveModelSerializers::SerializableResource.new(auth_user)}
     end
 
     def signup
