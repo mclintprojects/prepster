@@ -16,6 +16,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'sqlite3'
   gem 'pry-rails'
+  gem 'factory_bot'
+  gem 'forgery'
 end
 
 group :development do
