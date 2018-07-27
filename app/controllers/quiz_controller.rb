@@ -1,27 +1,29 @@
 class QuizController < ApplicationController
-    def new
-        if(authenticated?)
-            quiz = Quiz.new(quiz_params)
-            quiz.user_id = auth_user.id
-            quiz.identifier = generate_identifier
+    before_action :verify_authorized
 
-            if(quiz.save)
-                render json: quiz, serializer: QuizSerializer, status: 201
-            else
-                render json: {errors: quiz.errors.full_messages}, status: 422
-            end
+    def new
+        quiz = Quiz.new(quiz_params)
+        quiz.user_id = auth_user.id
+        quiz.identifier = generate_identifier
+
+        if(quiz.save)
+            render json: quiz, serializer: QuizSerializer, status: 201
         else
-            render json: {}, status: 401
+            render json: {errors: quiz.errors.full_messages}, status: 422
         end
+    end
+
+    def get
+        render json: auth_user.quizzes, each_serializer: QuizSerializer, status: 200
     end
 
     def delete
         quiz = Quiz.find(params[:quiz_id])
-        if(authenticated? && quiz.user_id == auth_user.id)
+        if(quiz.user_id == auth_user.id)
             quiz.destroy
             render json: {}, status: 200
         else
-            render json: {}, status: 401
+            render json: {}, status: 403
         end
     end
 

@@ -1,4 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
+require "json"
 
 RSpec.describe QuizController, type: :controller do
     describe "POST #new" do
@@ -28,6 +29,17 @@ RSpec.describe QuizController, type: :controller do
             post :new, params: quiz
             post :new, params: quiz
             expect(response).to have_http_status(422)
+        end
+    end
+
+    describe "GET #get" do
+        it "should get a user's quizzes" do
+            quiz = create(:quiz)
+
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            get :get, params: {user_id: quiz.user.id}
+            expect(response).to have_http_status(200)
+            expect(JSON.parse(response.body).length).to eq(1)
         end
     end
 

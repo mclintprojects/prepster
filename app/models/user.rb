@@ -9,6 +9,8 @@ class User < ApplicationRecord
     validates_uniqueness_of :email
     validates_presence_of :password, on: :create
     validates_length_of :password, minimum: 8, on: :create
+    has_many :quizzes
+    has_many :collections
 
     def create_jwt
         payload = {data: {user_id: self.id}}

@@ -8,6 +8,10 @@ class ApplicationController < ActionController::API
         @is_authenticated
     end
 
+    def verify_authorized
+        head(401) unless authenticated?
+    end
+
     private
 
     attr_accessor :is_authenticated
