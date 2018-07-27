@@ -1,12 +1,17 @@
 class QuizController < ApplicationController
     def new
-        quiz = Quiz.new(quiz_params)
-        quiz.identifier = generate_identifier
+        if(authenticated?)
+            quiz = Quiz.new(quiz_params)
+            quiz.user_id = auth_user.id
+            quiz.identifier = generate_identifier
 
-        if(quiz.save)
-            render json: quiz, serializer: QuizSerializer, status: 201
+            if(quiz.save)
+                render json: quiz, serializer: QuizSerializer, status: 201
+            else
+                render json: {errors: quiz.errors.full_messages}, status: 422
+            end
         else
-            render json: {errors: quiz.errors.full_messages}, status: 422
+            render json: {}, status: 401
         end
     end
 
@@ -26,7 +31,6 @@ class QuizController < ApplicationController
             :title,
             :duration,
             :is_public,
-            :user_id          
         )
     end
 end

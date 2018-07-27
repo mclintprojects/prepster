@@ -1,6 +1,12 @@
 class AuthController < ApplicationController
     def login
-        render json: {is_authenticated: authenticated?, user: ActiveModelSerializers::SerializableResource.new(auth_user)}
+        user = User.find_by(email: params[:email])
+        if(user.authenticate(params[:password]))
+            render json: {user: ActiveModelSerializers::SerializableResource.new(user),
+            token: user.create_jwt}, status: 200
+        else
+            render json: {errors: ["Invalid email or password"] }, status: 403
+        end
     end
 
     def signup

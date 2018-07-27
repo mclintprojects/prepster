@@ -36,7 +36,6 @@ class ApplicationController < ActionController::API
     end
 
     def decode_token(token)
-        puts token
         JWT.decode(token, ENV["jwt_secret"], true, {algorithm: "HS256"})[0]["data"]
     end
 end

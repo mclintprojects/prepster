@@ -12,6 +12,7 @@ RSpec.describe QuizController, type: :controller do
             }
             
             before_count = Quiz.all.count
+            request.headers["Authorization"] = "Bearer #{user.create_jwt}"
             post :new, params: quiz
             expect(response).to have_http_status(201)
             expect(Quiz.all.count).to eq(before_count + 1)
