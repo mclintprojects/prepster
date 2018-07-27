@@ -9,4 +9,5 @@ Rails.application.routes.draw do
 
     post "question", to: "question#new"
     put "question", to: "question#update"
+    delete "question", to: "question#delete"
 end

@@ -60,4 +60,16 @@ RSpec.describe QuestionController, type: :controller do
             expect(json["answers"][0]["text"]).to eq("20")
         end
     end
+
+    describe "DELETE #delete" do
+        it "delete a quiz's question" do
+            quiz = create(:quiz)
+            question = Question.create(quiz_id: quiz.id, text: "test")
+
+            before_count = Question.all.count
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            delete :delete, params: {question_id: question.id}
+            expect(Question.all.count).to eq(before_count - 1)
+        end
+    end
 end

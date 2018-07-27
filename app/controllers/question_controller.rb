@@ -26,6 +26,16 @@ class QuestionController < ApplicationController
         render json: question, serializer: QuestionSerializer, status: 200
     end
 
+    def delete
+        question = Question.find(params[:question_id])
+        if(auth_user.id == question.quiz.user_id)
+            question.destroy
+            render json: {}, status: 200
+        else
+            render json: {}, status: 403
+        end
+    end
+
     private
 
     def new_question_params
