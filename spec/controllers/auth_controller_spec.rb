@@ -8,7 +8,7 @@ RSpec.describe AuthController, type: :controller do
                 first_name: Forgery("name").first_name,
                 last_name: Forgery("name").last_name,
                 email: Forgery("internet").email_address,
-                password: Forgery("basic").password,
+                password: "password",
             }
 
             post :signup, params: user
