@@ -1,5 +1,5 @@
 class QuizController < ApplicationController
-    before_action :verify_authorized
+    before_action :verify_authorized, except: [:leaderboard]
 
     def new
         quiz = Quiz.new(quiz_params)
@@ -39,6 +39,15 @@ class QuizController < ApplicationController
             render json: {quiz_url: quiz.identifier}, status: 200
         else
             render json: {}, status: 403
+        end
+    end
+
+    def leaderboard
+        quiz = Quiz.find(params[:quiz_id])
+        if(quiz.present?)
+            render json: {quiz: ActiveModelSerializers::SerializableResource.new(quiz),leaderboard: ActiveModelSerializers::SerializableResource.new(quiz.quiz_sessions.where("completed = ?", true).order("score DESC"))}, status: 200
+        else
+            render json: {}, status: 404
         end
     end
 

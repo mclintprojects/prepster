@@ -78,4 +78,20 @@ RSpec.describe QuizController, type: :controller do
             expect(JSON.parse(response.body)["quiz_url"]).to eq(Quiz.find(quiz.id).identifier)
         end
     end
+
+    describe "GET #leaderboard" do
+        it "should get a quiz's leaderboard" do
+            quiz = create(:quiz)
+            session1 = QuizSession.create(quiz_id: quiz.id, player: "Kofi", completed: true, score: 50)
+            session2 = QuizSession.create(quiz_id: quiz.id, player: "Clinton", completed: true, score: 45)
+
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            get :leaderboard, params: {quiz_id: quiz.id}
+
+            leaderboard = JSON.parse(response.body)["leaderboard"]
+            expect(response).to have_http_status(200)
+            expect(leaderboard.length).to eq(2)
+            expect(leaderboard[0]["score"]).to eq(50)
+        end
+    end
 end

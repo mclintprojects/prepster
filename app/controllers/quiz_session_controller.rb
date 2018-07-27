@@ -21,7 +21,7 @@ class QuizSessionController < ApplicationController
                 end
             end
 
-            session.update_attributes(score: correct_answers)
+            session.update_attributes(score: correct_answers, completed: true)
             render json: session, serializer: MarkedQuizSessionSerializer, status: 200
         else
             render json: {}, status: 404

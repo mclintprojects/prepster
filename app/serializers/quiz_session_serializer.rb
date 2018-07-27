@@ -14,6 +14,6 @@ class MarkedQuizSessionSerializer < ActiveModel::Serializer
     end
 
     def leaderboard
-        object.quiz.quiz_sessions.order(:score).limit(5)
+        object.quiz.quiz_sessions.order("score DESC").limit(5)
     end
 end
