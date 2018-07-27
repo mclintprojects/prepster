@@ -12,4 +12,6 @@ Rails.application.routes.draw do
     put "question", to: "question#update"
     delete "question", to: "question#delete"
 
+    post "quiz_session", to: "quiz_session#start"
+
 end
