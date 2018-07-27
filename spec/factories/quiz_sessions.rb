@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :quiz_session do
-    player "MyString"
-    score 1
-    quiz_id 1
+    player Forgery("name").full_name
+    score 20
+    quiz
   end
 end

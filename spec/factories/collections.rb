@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :collection do
-    title "MyString"
-    user ""
-    is_public false
+    title Forgery("lorem_ipsum").words(2)
+    user
+    is_public true
   end
 end

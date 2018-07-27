@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :question do
-    text "MyString"
-    answer_id 1
+    text Forgery("lorem_ipsum").words(10)
+    answer
   end
 end
