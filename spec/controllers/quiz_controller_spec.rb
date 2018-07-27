@@ -43,6 +43,17 @@ RSpec.describe QuizController, type: :controller do
         end
     end
 
+    describe "GET #search" do
+        it "should get quizzes matching title" do
+            quiz = create(:quiz)
+
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            get :search, params: {query: quiz.title}
+            expect(response).to have_http_status(200)
+            expect(JSON.parse(response.body).length).to eq(1)
+        end
+    end
+
     describe "DELETE #delete" do
         it "should delete quiz" do
             quiz = create(:quiz)
