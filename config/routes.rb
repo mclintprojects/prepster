@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     delete "question", to: "question#delete"
 
     post "quiz_session", to: "quiz_session#start"
+    post "quiz_session/mark"
 
 end

@@ -2,7 +2,7 @@ class Quiz < ApplicationRecord
     validates_presence_of :title
     validates_presence_of :duration
     validates_presence_of :identifier
-    validate :quiz_validations
+    validate :quiz_validations, on: :create
     belongs_to :user
     has_many :questions, dependent: :destroy
     has_many :quiz_sessions, dependent: :destroy
