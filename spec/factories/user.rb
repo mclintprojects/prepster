@@ -3,6 +3,6 @@ FactoryBot.define do
     first_name Forgery("name").first_name
     last_name  Forgery("name").last_name
     email Forgery("internet").email_address
-    password Forgery("basic").password
+    password "password"
   end
 end
