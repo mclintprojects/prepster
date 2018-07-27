@@ -15,6 +15,16 @@ class QuizController < ApplicationController
         end
     end
 
+    def delete
+        quiz = Quiz.find(params[:quiz_id])
+        if(authenticated? && quiz.user_id == auth_user.id)
+            quiz.destroy
+            render json: {}, status: 200
+        else
+            render json: {}, status: 401
+        end
+    end
+
     private
 
     def generate_identifier

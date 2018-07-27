@@ -30,4 +30,16 @@ RSpec.describe QuizController, type: :controller do
             expect(response).to have_http_status(422)
         end
     end
+
+    describe "DELETE #delete" do
+        it "should delete quiz" do
+            quiz = create(:quiz)
+
+            before_count = Quiz.all.count
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            delete :delete, params: {quiz_id: quiz.id}
+            expect(response).to have_http_status(200)
+            expect(Quiz.all.count).to eq(before_count-1)
+        end
+    end
 end
