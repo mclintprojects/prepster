@@ -6,8 +6,10 @@ Rails.application.routes.draw do
     post "quiz", to: "quiz#new"
     delete "quiz", to: "quiz#delete"
     get "quiz/search"
+    get "quiz/finalize"
 
     post "question", to: "question#new"
     put "question", to: "question#update"
     delete "question", to: "question#delete"
+
 end

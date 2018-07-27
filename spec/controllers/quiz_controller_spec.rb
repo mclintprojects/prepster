@@ -65,4 +65,17 @@ RSpec.describe QuizController, type: :controller do
             expect(Quiz.all.count).to eq(before_count-1)
         end
     end
+
+    describe "POST #finalize" do
+        it "should finalize quiz and return url" do
+            quiz = create(:quiz)
+
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            post :finalize, params: {quiz_id: quiz.id}
+            
+            expect(response).to have_http_status(200)
+            expect(Quiz.find(quiz.id).is_completed).to eq(true)
+            expect(JSON.parse(response.body)["quiz_url"]).to eq(Quiz.find(quiz.id).identifier)
+        end
+    end
 end

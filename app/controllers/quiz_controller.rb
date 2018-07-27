@@ -31,6 +31,17 @@ class QuizController < ApplicationController
         end
     end
 
+    def finalize
+        quiz = Quiz.find(params[:quiz_id])
+
+        if(auth_user.id == quiz.user_id)
+            quiz.update_attributes(is_completed: true)
+            render json: {quiz_url: quiz.identifier}, status: 200
+        else
+            render json: {}, status: 403
+        end
+    end
+
     private
 
     def generate_identifier
