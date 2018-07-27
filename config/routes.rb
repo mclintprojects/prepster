@@ -7,4 +7,5 @@ Rails.application.routes.draw do
     delete "quiz", to: "quiz#delete"
     get "quiz/search"
 
+    post "question", to: "question#new"
 end
