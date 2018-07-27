@@ -27,4 +27,37 @@ RSpec.describe QuestionController, type: :controller do
             expect(JSON.parse(response.body)["answers"].length).to eq(2)
         end
     end
+
+    describe "PUT #update" do
+        it "update a quiz's question" do
+            quiz = create(:quiz)
+            question = {
+                text: "What is my name?",
+                quiz_id: quiz.id,
+                answer: 1,
+                answers: [{text: "Kofi"}, {text: "Clinton"}]
+            }
+
+            request.headers["Authorization"] = "Bearer #{quiz.user.create_jwt}"
+            before_question_count = Question.all.count
+            before_answer_count = Answer.all.count
+
+            post :new, params: question
+
+            answers = JSON.parse(response.body)["answers"]
+            updated_question = {
+                text: "What is my age?",
+                question_id: JSON.parse(response.body)["id"],
+                answer_id: 2,
+                answers: [{text: "20", id: answers[0]["id"]}, {text: "21", id: answers[1]["id"]}]
+            }
+
+            put :update, params: updated_question
+
+            json = JSON.parse(response.body)
+            expect(json["text"]).to eq(updated_question[:text])
+            expect(Question.find(json["id"]).answer_id).to eq(2)
+            expect(json["answers"][0]["text"]).to eq("20")
+        end
+    end
 end

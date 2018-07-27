@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     get "quiz/search"
 
     post "question", to: "question#new"
+    put "question", to: "question#update"
 end
