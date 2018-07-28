@@ -1,5 +1,5 @@
 class AlterQuizSessions < ActiveRecord::Migration[5.2]
   def change
-    change_column :quizzes, :sessions, 'integer USING CAST(column_name AS integer)'
+    change_column :quizzes, :sessions, :integer, using: 'sessions::integer'
   end
 end
