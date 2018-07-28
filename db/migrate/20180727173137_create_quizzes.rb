@@ -4,7 +4,7 @@ class CreateQuizzes < ActiveRecord::Migration[5.2]
       t.string :title
       t.integer :duration
       t.boolean :is_public, default: false
-      t.string :sessions
+      t.integer :sessions, default: 0
       t.string :integer
       t.boolean :is_completed, default: false
       t.string :identifier
