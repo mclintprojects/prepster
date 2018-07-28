@@ -4,7 +4,9 @@ class QuizSessionController < ApplicationController
         if(session.save)
             quiz = Quiz.find(session.quiz_id)
             quiz.update_attributes(sessions: quiz.sessions + 1)
-            render json: session, serializer: QuizSessionSerializer, status: 201
+            render json: {
+                session: ActiveModelSerializers::SerializableResource.new(session), 
+                questions: ActiveModelSerializers::SerializableResource.new(quiz.questions), quiz: ActiveModelSerializers::SerializableResource.new(quiz)}, status: 201
         else
             render json: {errors: session.errors.full_messages}, status: 422
         end

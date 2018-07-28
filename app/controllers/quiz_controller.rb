@@ -21,6 +21,10 @@ class QuizController < ApplicationController
         render json: Quiz.where("LOWER(title) LIKE ?", params[:query].downcase), each_serializer: QuizSerializer, status: 200
     end
 
+    def identify
+        render json: Quiz.find_by(identifier: params[:identifier]), serializer: QuizSerializer, status: 200
+    end
+
     def delete
         quiz = Quiz.find(params[:quiz_id])
         if(quiz.user_id == auth_user.id)

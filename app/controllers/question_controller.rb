@@ -1,6 +1,10 @@
 class QuestionController < ApplicationController
     before_action :verify_authorized
 
+    def get
+        render json: Question.where("quiz_id = ?", params[:quiz_id]), each_serializer: QuestionSerializer, status: 200
+    end
+
     def new
         question = Question.new(text: new_question_params[:text], quiz_id: new_question_params[:quiz_id])
         question.save
