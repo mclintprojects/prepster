@@ -1,7 +1,7 @@
 class AuthController < ApplicationController
     def login
         user = User.find_by(email: params[:email])
-        if(user.authenticate(params[:password]))
+        if(user.present? && user.authenticate(params[:password]))
             render json: {user: ActiveModelSerializers::SerializableResource.new(user),
             token: user.create_jwt}, status: 200
         else
